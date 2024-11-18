@@ -1,22 +1,16 @@
-import StartupCard,{ StartupTypeCard } from "@/components/StartupCard";
+import StartupCard, { StartupTypeCard } from "@/components/StartupCard";
 import SearchForm from "../../components/SearchForm";
-import { client } from "@/sanity/lib/client";
 import { STARTUPS_QUERY } from "@/sanity/lib/queries";
+import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 export default async function Home({ searchParams }: {
   searchParams: Promise<{ query?: string }>
 }) {
   const query = (await searchParams).query
-  const posts = await client.fetch(STARTUPS_QUERY)
-  // const posts = [{
-  //   _createdAt: new Date(),
-  //   views: 55,
-  //   author: { _id: 1, name: "KUBA" },
-  //   _id: 1,
-  //   description: "The description",
-  //   image: "https://private-user-images.githubusercontent.com/116550178/336055617-9df90d22-17bc-41d2-a84f-a2739478b6df.jpg?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzE1MDUxNTUsIm5iZiI6MTczMTUwNDg1NSwicGF0aCI6Ii8xMTY1NTAxNzgvMzM2MDU1NjE3LTlkZjkwZDIyLTE3YmMtNDFkMi1hODRmLWEyNzM5NDc4YjZkZi5qcGc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjQxMTEzJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI0MTExM1QxMzM0MTVaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0wYzc1YWRhYjVkZDc5MWYzYWNkZjQ2MjI5NWZlZjNiYTQ3MTI3YzI1MmRjNzdhY2MyZGYwZGM2YTlmODU3ZTgwJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.DrBiumGGLcfhCpiQWq8tegdslA2_Nry1iq--Vit-OIg",
-  //   category: "Crypto",
-  //   title: "W Blockchain",
-  // }]
+  const params = { search: query || null }
+  const { data: posts } = await sanityFetch({
+    query: STARTUPS_QUERY,params
+  })
+
   return (
     <>
       <section className="pink_container">
@@ -43,6 +37,7 @@ export default async function Home({ searchParams }: {
           }
         </ul>
       </section>
+      <SanityLive />
     </>
   )
 }
