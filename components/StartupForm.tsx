@@ -32,14 +32,14 @@ const StartupForm = () => {
                value={pitch}
                onChange={(value)=>setPtch(value as string) }
                id="pitch"
-               previev="edit"
+               preview="edit"
                height={300}
                style={{borderRadius:20,overflow:"hidden"}}
                textareaProps={{
                 placeholder:
                 "Briefly describe your idea and what problem it resolve"
                }}
-               previweOptions={{
+               previewOptions={{
                 disallowedElements:["style"],
                }}
                />
