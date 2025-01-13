@@ -1,12 +1,19 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useActionState, useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Textarea } from './ui/textarea'
 import MDEditor from "@uiw/react-md-editor";
 import { Button } from './ui/button';
 const StartupForm = () => {
     const [errors, setErrors] = useState<Record<string, string>>({})
-    const [pitch,setPtch]=useState()
+    const [pitch, setPtch] = useState()
+       const handleFormSubmit=()=>{
+
+    }
+    const [state, formAction, isPending] = useActionState(handleFormSubmit, {
+        error: "",
+        status: "INITIAL",
+      }); 
     return (
         <form action={() => { }} className='startup-form'>
             <div>
@@ -28,21 +35,21 @@ const StartupForm = () => {
 
             <div data-color-mode="light">
                 <label htmlFor="pitch" className='startup-form_label'>Title</label>
-               <MDEditor
-               value={pitch}
-               onChange={(value)=>setPtch(value as string) }
-               id="pitch"
-               preview="edit"
-               height={300}
-               style={{borderRadius:20,overflow:"hidden"}}
-               textareaProps={{
-                placeholder:
-                "Briefly describe your idea and what problem it resolve"
-               }}
-               previewOptions={{
-                disallowedElements:["style"],
-               }}
-               />
+                <MDEditor
+                    value={pitch}
+                    onChange={(value) => setPtch(value as string)}
+                    id="pitch"
+                    preview="edit"
+                    height={300}
+                    style={{ borderRadius: 20, overflow: "hidden" }}
+                    textareaProps={{
+                        placeholder:
+                            "Briefly describe your idea and what problem it resolve"
+                    }}
+                    previewOptions={{
+                        disallowedElements: ["style"],
+                    }}
+                />
                 {errors.pitch && <p className='startup-form_error'>{errors.pitch}</p>}
             </div>
             <Button type="submit" className="startup-form_btn">
