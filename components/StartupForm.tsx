@@ -5,6 +5,7 @@ import { Textarea } from './ui/textarea'
 import MDEditor from "@uiw/react-md-editor";
 import { Button } from './ui/button';
 import { formSchema } from '@/lib/validation';
+import { Send } from 'lucide-react';
 const StartupForm = () => {
     const [errors, setErrors] = useState<Record<string, string>>({})
     const [pitch, setPtch] = useState()
@@ -18,6 +19,7 @@ const StartupForm = () => {
                 pitch,
             }
             await formSchema.parseAsync(fromValues);
+            console.log(fromValues)
             // const result = await createDiffieHellman(prevState,formData,pitch)
         } catch (error) {
 
@@ -41,6 +43,11 @@ const StartupForm = () => {
                 <label htmlFor="description" className='startup-form_label'>Description</label>
                 <Textarea id="description" name='description' className='startup-form_textarea' required placeholder='Startup Description' />
                 {errors.description && <p className='startup-form_error'>{errors.description}</p>}
+            </div>
+            <div>
+                <label htmlFor="category" className='startup-form_label'>Category</label>
+                <Textarea id="category" name='category' className='startup-form_input' required placeholder='Startup Category' />
+                {errors.description && <p className='startup-form_error'>{errors.category}</p>}
             </div>
             <div>
                 <label htmlFor="link" className='startup-form_label'>Image URL</label>
@@ -67,8 +74,14 @@ const StartupForm = () => {
                 />
                 {errors.pitch && <p className='startup-form_error'>{errors.pitch}</p>}
             </div>
-            <Button type="submit" className="startup-form_btn">
-            </Button>
+            <Button
+        type="submit"
+        className="startup-form_btn text-white"
+        disabled={isPending}
+      >
+        {isPending ? "Submitting..." : "Submit Your Pitch"}
+        <Send className="size-6 ml-2" />
+      </Button>
         </form>
     )
 }
